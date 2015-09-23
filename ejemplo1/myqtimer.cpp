@@ -17,24 +17,18 @@
 
 #include "myqtimer.h"
 
-MyQTimer::MyQTimer(QMutex* m_): QThread()
+MyQTimer::MyQTimer(): QThread()
 {
-	control=m_;
 }
 
 void MyQTimer::setseg(int seg)
 {
-	control->lock();
-	mseg=seg;
-	control->unlock();
+	mseg.set(seg);
 }
 void MyQTimer::run()
 {
 	while(1){
-	      control->lock();
-	      int aux=mseg;
-	      control->unlock();
-	      msleep(aux);
+	      msleep(mseg.get());
 	      emit senal();
 	}
 }

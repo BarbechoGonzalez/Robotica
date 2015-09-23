@@ -18,7 +18,7 @@ public slots:
 	void doButtonStart();
 	void doIncrease();
 private:
-  MyQTimer *clk;
+  MyQTimer clk;
   QMutex contol;
   
 };

@@ -4,14 +4,13 @@ ejemplo1::ejemplo1(): Ui_Counter()
 {
 	setupUi(this);
 	show();
-	clk=new MyQTimer(&contol);
 	connect(button_stop, SIGNAL(clicked()), this, SLOT(doButtonStop()));
 	connect(button_start, SIGNAL(clicked()), this, SLOT(doButtonStart()));
-	connect(clk, SIGNAL(senal()), this, SLOT(doIncrease()));
-	connect(slider, SIGNAL(sliderMoved(int)), clk, SLOT(setseg(int)));
+	connect(&clk, SIGNAL(senal()), this, SLOT(doIncrease()));
+	connect(slider, SIGNAL(sliderMoved(int)), &clk, SLOT(setseg(int)));
 	connect(slider, SIGNAL(sliderMoved(int)), lcdslider, SLOT(display(int)));
-	clk->setseg(slider->value());
-	clk->start();
+	clk.setseg(slider->value());
+	clk.start();
 	
 }
 
@@ -20,11 +19,11 @@ ejemplo1::~ejemplo1()
 
 void ejemplo1::doButtonStop()
 {
-  clk->terminate();
+  clk.terminate();
 }
 void ejemplo1::doButtonStart()
 {
-  clk->start();
+  clk.start();
 }
 
 void ejemplo1::doIncrease()

@@ -24,11 +24,26 @@
 #include <signal.h>
 class MyQTimer : public QThread
 {
+    struct entero_EMutua{
+      int interv;
+      QMutex c_;
+      void set(int interv_){
+	c_.lock();
+	interv=interv_;
+	c_.unlock();
+      }
+      int get(){
+	c_.lock();
+	int aux= interv;
+	c_.unlock();
+	return aux;
+      }
+    };
+      
     Q_OBJECT
-    QMutex *control;
-    int mseg;
+    entero_EMutua mseg;
 public:
-  MyQTimer(QMutex * m_);
+  MyQTimer();
 public slots:
   void setseg(int seg);
 protected:
